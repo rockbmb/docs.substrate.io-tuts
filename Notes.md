@@ -2,7 +2,19 @@
 
 These were taken while following the tutorials in docs.substrate, in order.
 
-## Simulate a network
+## Build a blockchain
+
+### Build a local blockchain
+
+From https://docs.substrate.io/tutorials/build-a-blockchain/build-local-blockchain/
+
+```bash
+./target/release/node-template --dev
+
+(cd ../substrate-front-end-template; yarn install && yarn start )
+```
+
+### Simulate a network
 
 From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
 
@@ -17,10 +29,11 @@ From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
     --rpc-port 9945 \
     --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
     --validator
-
-./target/release/solochain-template-node build-spec --chain=customSpec.json --raw --disable-default-bootnode > customSpecRaw.json
+    # deprecated
+#   --telemetry-url "wss://telemetry.polkadot.io/submit/ 0" \
 
 ./target/release/solochain-template-node purge-chain --base-path /tmp/bob --chain local
+
 ./target/release/solochain-template-node \
     --base-path /tmp/bob \
     --chain local \
@@ -30,13 +43,13 @@ From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
     --node-key 0000000000000000000000000000000000000000000000000000000000000002 \
     --validator \
     --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
-
-###
 ```
-----
 
-1.
+### Add trusted nodes
 
+From https://docs.substrate.io/tutorials/build-a-blockchain/add-trusted-nodes/
+
+```bash
 # Tutorial omits this for the network's bootstrapping node, it seems to have fallen out of date.
 ./target/release/solochain-template-node key generate-node-key \
     --base-path /tmp/node01 \
@@ -100,3 +113,4 @@ From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
   --name MyNode02 \
   --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWALgfhpaAw1qwKm6xDnLTfLgNLMeQKTHcmUfmGeZr4FhP \
   --password-interactive
+```
