@@ -73,7 +73,7 @@ From https://docs.substrate.io/tutorials/build-a-blockchain/add-trusted-nodes/
 # 5GYj3MQCTYUJKHteiLZgpE9CgUh2CatVEhEkG7B7NhvLcT1C
 ```
 
-#### Chain specification generation
+#### Chain specification modification
 
 ```bash
 # This chapter appears to be out of order
@@ -85,6 +85,11 @@ head customSpec.json
 tail -n 78 customSpec.json
 ```
 
+#### Chain specification generation
+
+```bash
+./target/release/solochain-template-node build-spec --chain=customSpec.json --raw --disable-default-bootnode > customSpecRaw.json
+```
 
 
 ```bash
