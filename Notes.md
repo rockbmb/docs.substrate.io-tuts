@@ -2,32 +2,37 @@
 
 These were taken while following the tutorials in docs.substrate, in order.
 
+## Simulate a network
+
+From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
+
+```bash
 ./target/release/solochain-template-node purge-chain --base-path /tmp/alice --chain local
 
 ./target/release/solochain-template-node \
---base-path /tmp/alice \
---chain local \
---alice \
---port 30333 \
---rpc-port 9945 \
---node-key 0000000000000000000000000000000000000000000000000000000000000001 \
---validator
-
-./target/release/solochain-template-node purge-chain --base-path /tmp/bob --chain local
-./target/release/solochain-template-node \
---base-path /tmp/bob \
---chain local \
---bob \
---port 30334 \
---rpc-port 9946 \
---node-key 0000000000000000000000000000000000000000000000000000000000000002 \
---validator \
---bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
-
----
+    --base-path /tmp/alice \
+    --chain local \
+    --alice \
+    --port 30333 \
+    --rpc-port 9945 \
+    --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+    --validator
 
 ./target/release/solochain-template-node build-spec --chain=customSpec.json --raw --disable-default-bootnode > customSpecRaw.json
 
+./target/release/solochain-template-node purge-chain --base-path /tmp/bob --chain local
+./target/release/solochain-template-node \
+    --base-path /tmp/bob \
+    --chain local \
+    --bob \
+    --port 30334 \
+    --rpc-port 9946 \
+    --node-key 0000000000000000000000000000000000000000000000000000000000000002 \
+    --validator \
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+
+###
+```
 ----
 
 1.
