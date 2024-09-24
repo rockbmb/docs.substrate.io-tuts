@@ -9,9 +9,9 @@ These were taken while following the tutorials in docs.substrate, in order.
 From https://docs.substrate.io/tutorials/build-a-blockchain/build-local-blockchain/
 
 ```bash
-./target/release/node-template --dev
+./target/release/solochain-template-node --dev
 
-(cd ../substrate-front-end-template; yarn install && yarn start )
+( cd ../substrate-front-end-template; yarn install && yarn start )
 ```
 
 ### Simulate a network
@@ -48,6 +48,44 @@ From https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/
 ### Add trusted nodes
 
 From https://docs.substrate.io/tutorials/build-a-blockchain/add-trusted-nodes/
+
+#### AURA/GRANDPA key generation
+
+```bash
+# For Alice
+./target/release/solochain-template-node key generate --scheme Sr25519 --password-interactive
+# Secret phrase
+# payment upon cost remember theory demise father where column such shine kangaroo
+# SS58 address (Sr25519)
+# 5Cw2K79BH6Bqoepg1ZHkaEWfg1AyBmxf8kue6ztuaqKxMGFv
+./target/release/solochain-template-node key inspect --password-interactive --scheme Ed25519 "payment upon cost remember theory demise father where column such shine kangaroo"
+# SS58 address (Ed25519)
+# 5FctcjjyxKRjM48ktvyNmC3J87QjJheAu6L7nTD9pYyzV5o1
+
+# For Bob
+./target/release/solochain-template-node key generate --scheme Sr25519 --password-interactive
+# Secret phrase
+# dial front limb very slush goddess sea pact spider version speed transfer
+# SS58 address (Sr25519)
+# 5EDCwiBnULowxZbkZxjDA4v7e7qyRub29i7FSXsHGMQBKpKq
+./target/release/solochain-template-node key inspect --password-interactive --scheme Ed25519 "dial front limb very slush goddess sea pact spider version speed transfer"
+# SS58 address (Ed25519)
+# 5GYj3MQCTYUJKHteiLZgpE9CgUh2CatVEhEkG7B7NhvLcT1C
+```
+
+#### Chain specification generation
+
+```bash
+# This chapter appears to be out of order
+./target/release/solochain-template-node build-spec --disable-default-bootnode --chain local > customSpec.json
+
+# The line containing the entire runtime appears with `-n` greater than 11 
+head customSpec.json
+
+tail -n 78 customSpec.json
+```
+
+
 
 ```bash
 # Tutorial omits this for the network's bootstrapping node, it seems to have fallen out of date.
