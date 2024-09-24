@@ -1,5 +1,5 @@
 {
-  "name": "My Little Substrate Testnet",
+  "name": "My Local Substrate Chain",
   "id": "local_testnet",
   "chainType": "Local",
   "bootNodes": [],
@@ -13,8 +13,8 @@
       "patch": {
         "aura": {
           "authorities": [
-            "5GGvFTx1tecXA3UUuid3yQAkb9XSSSTq13M8L2DWabTJhU2i",
-            "5CRoGHPzVrJnk4Qops5wg4T48uPyTe6dWFAkmwXzZRon9G42"
+            "5Cw2K79BH6Bqoepg1ZHkaEWfg1AyBmxf8kue6ztuaqKxMGFv",
+            "5EDCwiBnULowxZbkZxjDA4v7e7qyRub29i7FSXsHGMQBKpKq"
           ]
         },
         "balances": {
@@ -72,11 +72,11 @@
         "grandpa": {
           "authorities": [
             [
-              "5ErxJ1D53LKDDFkWe1KE92oDnx3s3Hezobk1xAKWApHDsajs",
+              "5FctcjjyxKRjM48ktvyNmC3J87QjJheAu6L7nTD9pYyzV5o1",
               1
             ],
             [
-              "5GDm5vJKMPujiVTfgAEhaqfFkMzjLEuvbhQTFPGps4AQe66o",
+              "5GYj3MQCTYUJKHteiLZgpE9CgUh2CatVEhEkG7B7NhvLcT1C",
               1
             ]
           ]
