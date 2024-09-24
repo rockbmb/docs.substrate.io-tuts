@@ -91,50 +91,68 @@ tail -n 78 customSpec.json
 ./target/release/solochain-template-node build-spec --chain=customSpec.json --raw --disable-default-bootnode > customSpecRaw.json
 ```
 
+#### Add previously generated keys to keystore
+
+A key must be generated for each node with the `key generate-node-key` subcommand.
+Otherwise, this error (or another similar one, for Sr25519) will be raised:
+
+```rust
+Error::NetworkKeyNotFound("/tmp/node01/chains/local_testnet/network/secret_ed25519")
+```
+
+##### Alice
 
 ```bash
 # Tutorial omits this for the network's bootstrapping node, it seems to have fallen out of date.
 ./target/release/solochain-template-node key generate-node-key \
     --base-path /tmp/node01 \
     --chain customSpecRaw.json
+# 12D3KooWRnsx1JjZk41bBZswVfjbcD2zfkPYqsrYJJBaHWvTo4X5
 
 ./target/release/solochain-template-node key insert \
-  --base-path /tmp/node01 \
-  --chain customSpecRaw.json \
-  --scheme Sr25519 \
-  --suri "chuckle hard laugh process legend knife pizza vivid shop wash chef engine" \
-  --password-interactive \
-  --key-type aura
+    --base-path /tmp/node01 \
+    --chain customSpecRaw.json \
+    --scheme Sr25519 \
+    --suri "payment upon cost remember theory demise father where column such shine kangaroo" \
+    --password-interactive \
+    --key-type aura
 
 ./target/release/solochain-template-node key insert \
-  --base-path /tmp/node01 \
-  --chain customSpecRaw.json \
-  --scheme Ed25519 \
-  --suri "chuckle hard laugh process legend knife pizza vivid shop wash chef engine" \
-  --password-interactive \
-  --key-type gran
+    --base-path /tmp/node01 \
+    --chain customSpecRaw.json \
+    --scheme Ed25519 \
+    --suri "payment upon cost remember theory demise father where column such shine kangaroo" \
+    --password-interactive \
+    --key-type gran
+
+ls /tmp/node02/chains/local_testnet/keystore
+# There shoulb be 2 items shown
 
 ./target/release/solochain-template-node \
-  --base-path /tmp/node01 \
-  --chain ./customSpecRaw.json \
-  --port 30333 \
-  --rpc-port 9945 \
-  --validator \
-  --rpc-methods Unsafe \
-  --name MyNode01 \
-  --password-interactive
+    --base-path /tmp/node01 \
+    --chain ./customSpecRaw.json \
+    --port 30333 \
+    --rpc-port 9945 \
+    --validator \
+    --rpc-methods Unsafe \
+    --name MyNode01 \
+    --password-interactive
+```
 
-2.
+##### Bob
 
+```bash
 ./target/release/solochain-template-node key generate-node-key \
     --base-path /tmp/node02 \
     --chain customSpecRaw.json
 
+# 12D3KooWSmRyfPZrWhQMbgMoVXPT2P8pViiUCXwdcK6uJ1eFsQEc
+
 ./target/release/solochain-template-node key insert \
   --base-path /tmp/node02 \
   --chain customSpecRaw.json \
   --scheme Sr25519 \
-  --suri "little plate hotel slogan hire ship daughter neutral fat confirm hamster trial" \
+  --suri "dial front limb very slush goddess sea pact spider version speed transfer" \
   --password-interactive \
   --key-type aura
 
@@ -142,9 +160,12 @@ tail -n 78 customSpec.json
   --base-path /tmp/node02 \
   --chain customSpecRaw.json \
   --scheme Ed25519 \
-  --suri "little plate hotel slogan hire ship daughter neutral fat confirm hamster trial" \
+  --suri "dial front limb very slush goddess sea pact spider version speed transfer" \
   --password-interactive \
   --key-type gran
+
+ls /tmp/node02/chains/local_testnet/keystore
+# There shoulb be 2 items shown 
 
 ./target/release/solochain-template-node \
   --base-path /tmp/node02 \
@@ -154,6 +175,6 @@ tail -n 78 customSpec.json
   --validator \
   --rpc-methods Unsafe \
   --name MyNode02 \
-  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWALgfhpaAw1qwKm6xDnLTfLgNLMeQKTHcmUfmGeZr4FhP \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWRnsx1JjZk41bBZswVfjbcD2zfkPYqsrYJJBaHWvTo4X5 \
   --password-interactive
 ```
