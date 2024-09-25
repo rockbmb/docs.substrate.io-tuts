@@ -178,3 +178,9 @@ ls /tmp/node02/chains/local_testnet/keystore
   --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWRnsx1JjZk41bBZswVfjbcD2zfkPYqsrYJJBaHWvTo4X5 \
   --password-interactive
 ```
+
+### Authorize specific nodes
+
+### Monitor node metrics
+
+See `./prometheus.yml`.
