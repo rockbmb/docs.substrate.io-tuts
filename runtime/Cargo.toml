@@ -27,10 +27,6 @@ frame-executive.workspace = true
 pallet-aura.workspace = true
 pallet-balances.workspace = true
 pallet-grandpa.workspace = true
-
-# For chapter on authorizing nodes
-pallet-node-authorization = { default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
-
 pallet-sudo.workspace = true
 pallet-timestamp.workspace = true
 pallet-transaction-payment.workspace = true
@@ -74,7 +70,6 @@ std = [
 	"pallet-aura/std",
 	"pallet-balances/std",
 	"pallet-grandpa/std",
-	"pallet-node-authorization/std",
 	"pallet-sudo/std",
 	"pallet-template/std",
 	"pallet-timestamp/std",
