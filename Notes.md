@@ -194,3 +194,13 @@ See `./prometheus.yml`.
 ### Specify the origin for a call
 
 ### Use macros in a custom pallet
+
+### Add offchain workers
+
+### Publish custom pallets
+
+### Collectibles workshop
+
+## Build a parachain
+
+### Prepare a local relay chain
