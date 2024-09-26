@@ -184,3 +184,13 @@ ls /tmp/node02/chains/local_testnet/keystore
 ### Monitor node metrics
 
 See `./prometheus.yml`.
+
+### Upgrade a running network
+
+## Build application logic
+
+### Add a pallet to the runtime
+
+### Specify the origin for a call
+
+### Use macros in a custom pallet
