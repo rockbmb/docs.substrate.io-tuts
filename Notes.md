@@ -204,3 +204,17 @@ See `./prometheus.yml`.
 ## Build a parachain
 
 ### Prepare a local relay chain
+
+Saved `raw-local-chainspec-json` to `/tmp`.
+
+Ran
+
+```bash
+./target/release/polkadot \
+    --alice \
+    --validator \
+    --base-path /tmp/relay/alice \
+    --chain /tmp/raw-local-chainspec.json \
+    --port 30333 \
+    --rpc-port 9944
+```
