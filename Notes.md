@@ -207,12 +207,15 @@ See `./prometheus.yml`.
 
 Saved `raw-local-chainspec-json` to `/tmp`.
 
-Ran
+From `./polkadot-sdk`, the commands run were
 
 ```bash
+# polkadot is one lever deeper inside polkadot-sdk
 ../target/release/polkadot key generate-node-key \
     --base-path /tmp/relay/alice \
     --chain /tmp/raw-local-chainspec.json
+# Our generated libp2p node ID for Alice is
+# 12D3KooWMAJa2PpZmqKsFS5HEXag4fAKj19tPrDJiSJL7FNZuFxY
 
 ../target/release/polkadot \
     --alice \
@@ -245,4 +248,41 @@ the command needs to be changed to
     --port 30333 \
     --rpc-port 9944 \
     --insecure-validator-i-know-what-i-do
+```
+
+---
+
+To start the second relay chain validator:
+
+```bash
+# don't forget the key generation step
+../target/release/polkadot key generate-node-key \
+    --base-path /tmp/relay/bob \
+    --chain /tmp/raw-local-chainspec.json
+
+# Our generated libp2p node ID for Bob is
+# 12D3KooWMFSvc7ZocAm3AapcLZd5frsNWWaqk76SaiduRqjkTLEa
+
+../target/release/polkadot \
+    --bob \
+    --validator \
+    --base-path /tmp/relay/bob \
+    --chain /tmp/raw-local-chainspec.json \
+    --port 30334 \
+    --rpc-port 9945 \
+    --insecure-validator-i-know-what-i-do
+```
+
+The network wasn't producing blocks, so `--bootnodes` must be used when initialization Bob's node.
+
+```bash
+../target/release/polkadot \
+    --bob \
+    --validator \
+    --base-path /tmp/relay/bob \
+    --chain /tmp/raw-local-chainspec.json \
+    --port 30334 \
+    --rpc-port 9945 \
+    --insecure-validator-i-know-what-i-do \
+    --bootnodes /ip4/127.000.00.1/tcp/30333/p2p/12D3KooWMAJa2PpZmqKsFS5HEXag4fAKj19tPrDJiSJL7FNZuFxY
 ```
