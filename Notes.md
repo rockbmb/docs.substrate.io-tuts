@@ -286,3 +286,21 @@ The network wasn't producing blocks, so `--bootnodes` must be used when initiali
     --insecure-validator-i-know-what-i-do \
     --bootnodes /ip4/127.000.00.1/tcp/30333/p2p/12D3KooWMAJa2PpZmqKsFS5HEXag4fAKj19tPrDJiSJL7FNZuFxY
 ```
+
+---
+
+After `CTRL^C` signaling the Alice node and mistakenly leaving Bob running, the following error
+arose in both nodes, even after restarts:
+
+`2024-09-27 18:16:48 Call to `DetermineUndisputedChain` failed error=DetermineUndisputedChainCanceled(Canceled)`
+
+To reset each node's db, the provided `chain-spec` JSON had to be used:
+
+```bash
+../target/release/polkadot purge-chain \
+    --base-path /tmp/relay/bob \
+    --chain /tmp/raw-local-chainspec.json
+../target/release/polkadot purge-chain \
+    --base-path /tmp/relay/bob \
+    --chain /tmp/raw-local-chainspec.json
+```
