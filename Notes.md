@@ -210,11 +210,39 @@ Saved `raw-local-chainspec-json` to `/tmp`.
 Ran
 
 ```bash
-./target/release/polkadot \
+../target/release/polkadot key generate-node-key \
+    --base-path /tmp/relay/alice \
+    --chain /tmp/raw-local-chainspec.json
+
+../target/release/polkadot \
     --alice \
     --validator \
     --base-path /tmp/relay/alice \
     --chain /tmp/raw-local-chainspec.json \
     --port 30333 \
     --rpc-port 9944
+```
+
+In order to avoid an error
+
+```bash
+🚨 Your system cannot securely run a validator.
+Running validation of malicious PVF code has a higher risk of compromising this machine.
+Secure mode is enabled only for Linux
+and a full secure mode is enabled only for Linux x86-64.
+You can ignore this error with the `--insecure-validator-i-know-what-i-do` command line argument if you understand and accept the risks of running insecurely. With this flag, security features are enabled on a best-effort basis, but not mandatory.
+More information: https://wiki.polkadot.network/docs/maintain-guides-secure-validator#secure-validator-mode
+```
+
+the command needs to be changed to
+
+```bash
+../target/release/polkadot \
+    --alice \
+    --validator \
+    --base-path /tmp/relay/alice \
+    --chain /tmp/raw-local-chainspec.json \
+    --port 30333 \
+    --rpc-port 9944 \
+    --insecure-validator-i-know-what-i-do
 ```
