@@ -308,6 +308,13 @@ To reset each node's db, the provided `chain-spec` JSON had to be used:
 
 ### Connect a local parachain
 
+Generate a plain-text chain specification using the parachain template's binary.
+
 ```bash
 ./target/release/parachain-template-node build-spec --disable-default-bootnode > plain-parachain-chainspec.json
 ```
+
+```bash
+./target/release/parachain-template-node build-spec --chain plain-parachain-chainspec.json --disable-default-bootnode --raw > raw-parachain-chainspec.json
+```
+
