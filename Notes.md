@@ -215,7 +215,7 @@ From `./polkadot-sdk`, the commands run were
     --base-path /tmp/relay/alice \
     --chain /tmp/raw-local-chainspec.json
 # Our generated libp2p node ID for Alice is
-# 12D3KooWMAJa2PpZmqKsFS5HEXag4fAKj19tPrDJiSJL7FNZuFxY
+# 12D3KooWDvtYmmv5Gek6WrYtgqv3qQvzZVex9ireQ5F4oztZpxmE
 
 ../target/release/polkadot \
     --alice \
@@ -261,7 +261,7 @@ To start the second relay chain validator:
     --chain /tmp/raw-local-chainspec.json
 
 # Our generated libp2p node ID for Bob is
-# 12D3KooWMFSvc7ZocAm3AapcLZd5frsNWWaqk76SaiduRqjkTLEa
+# 12D3KooWDiViW7g2v2kpCobmAhq6CXsQBy7S7n1eWhsNfxEbHHzo
 
 ../target/release/polkadot \
     --bob \
@@ -273,7 +273,8 @@ To start the second relay chain validator:
     --insecure-validator-i-know-what-i-do
 ```
 
-The network wasn't producing blocks, so `--bootnodes` must be used when initialization Bob's node.
+The network wasn't producing blocks, so `--bootnodes` must be used when initialization Bob's node,
+with Alice's information.
 
 ```bash
 ../target/release/polkadot \
@@ -284,7 +285,7 @@ The network wasn't producing blocks, so `--bootnodes` must be used when initiali
     --port 30334 \
     --rpc-port 9945 \
     --insecure-validator-i-know-what-i-do \
-    --bootnodes /ip4/127.000.00.1/tcp/30333/p2p/12D3KooWMAJa2PpZmqKsFS5HEXag4fAKj19tPrDJiSJL7FNZuFxY
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWDvtYmmv5Gek6WrYtgqv3qQvzZVex9ireQ5F4oztZpxmE
 ```
 
 ---
@@ -303,4 +304,10 @@ To reset each node's db, the provided `chain-spec` JSON had to be used:
 ../target/release/polkadot purge-chain \
     --base-path /tmp/relay/bob \
     --chain /tmp/raw-local-chainspec.json
+```
+
+### Connect a local parachain
+
+```bash
+./target/release/parachain-template-node build-spec --disable-default-bootnode > plain-parachain-chainspec.json
 ```
