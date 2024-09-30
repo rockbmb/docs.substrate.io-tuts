@@ -215,7 +215,7 @@ From `./polkadot-sdk`, the commands run were
     --base-path /tmp/relay/alice \
     --chain /tmp/raw-local-chainspec.json
 # Our generated libp2p node ID for Alice is
-# 12D3KooWDvtYmmv5Gek6WrYtgqv3qQvzZVex9ireQ5F4oztZpxmE
+# 12D3KooWKw7iqNppPRm3vX7q2oAQGjG5LUp91JEKGkoGCdgQ2qH2
 
 ../target/release/polkadot \
     --alice \
@@ -261,7 +261,7 @@ To start the second relay chain validator:
     --chain /tmp/raw-local-chainspec.json
 
 # Our generated libp2p node ID for Bob is
-# 12D3KooWDiViW7g2v2kpCobmAhq6CXsQBy7S7n1eWhsNfxEbHHzo
+# 12D3KooWSQ3dyXBo8jpEkQptecGdWfnJWgdR3dTKJg6FES32rHSN
 
 ../target/release/polkadot \
     --bob \
@@ -285,7 +285,7 @@ with Alice's information.
     --port 30334 \
     --rpc-port 9945 \
     --insecure-validator-i-know-what-i-do \
-    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWDvtYmmv5Gek6WrYtgqv3qQvzZVex9ireQ5F4oztZpxmE
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWKw7iqNppPRm3vX7q2oAQGjG5LUp91JEKGkoGCdgQ2qH2
 ```
 
 ---
@@ -308,6 +308,8 @@ To reset each node's db, the provided `chain-spec` JSON had to be used:
 
 ### Connect a local parachain
 
+#### Modify the default chain specification
+
 Generate a plain-text chain specification using the parachain template's binary.
 
 ```bash
@@ -318,3 +320,62 @@ Generate a plain-text chain specification using the parachain template's binary.
 ./target/release/parachain-template-node build-spec --chain plain-parachain-chainspec.json --disable-default-bootnode --raw > raw-parachain-chainspec.json
 ```
 
+#### Prepare the parachain collator
+
+##### Export the `WebAssembly` runtime for the parachain
+
+```bash
+./target/release/parachain-template-node export-genesis-wasm --chain raw-parachain-chainspec.json para-2000-wasm
+```
+
+##### Generate a parachain genesis state
+
+```bash
+./target/release/parachain-template-node export-genesis-state --chain raw-parachain-chainspec.json para-2000-genesis-state
+```
+
+🚨⚠️IMPORTANT⚠️🚨
+
+> "You should note that the runtime and state you export must be for the genesis block.
+>
+> You __can't__ connect a parachain with any previous state to a relay chain.
+> All parachains **must** start from block 0 on the relay chain. 
+
+##### Start a collator node
+
+> In this command, the arguments passed before the lone -- argument are for the parachain template collator. 
+> The arguments after the -- are for the embedded relay chain node.
+>
+> Notice that this command specifies both the raw chain specification for the parachain and the raw chain specification for the relay chain.
+
+A network key must be generated for the parachain collator, otherwise an error is thrown:
+
+`Error: NetworkKeyNotFound("/tmp/parachain/alice/chains/local_testnet/network/secret_ed25519")`
+
+```bash
+../polkadot-sdk-solochain-template/target/release/solochain-template-node key generate-node-key \
+    --base-path /tmp/parachain/alice \
+    --chain raw-parachain-chainspec.json
+
+# Generated netowrk key for alice, the parachain collator
+# 12D3KooWJQNh2JwrmqT9qcWqXCBMzeqPWb4gdnPcAZYEWGNCmwmt
+```
+
+```bash
+./target/release/parachain-template-node \
+    --alice \
+    --collator \
+    --force-authoring \
+    --chain raw-parachain-chainspec.json \
+    --base-path /tmp/parachain/alice \
+    --port 40333 \
+    --rpc-port 8844 \
+    -- \
+    --execution wasm \
+    --chain /tmp/raw-local-chainspec.json \
+    --port 30343 \
+    --rpc-port 9977 \
+    --bootnodes /ip4/127.0.0.1/tcp/30334/p2p/12D3KooWSQ3dyXBo8jpEkQptecGdWfnJWgdR3dTKJg6FES32rHSN
+```
+
+> Be sure the second `--chain` command-line specifies the path to the raw chain specification for your local relay chain.
