@@ -1,6 +1,9 @@
 # Personal notes
 
-These were taken while following the tutorials in docs.substrate, in order.
+This repository consists of personal notes taken while following the tutorials in
+[docs.substrate.io](https://docs.substrate.io/), in order.
+Starting in 2024, standalone substrate docs were deprecated in favor of other solutions, so some parts of it
+are no longer usable. These parts will be skipped, marked by an empty chapter.
 
 ## Build a blockchain
 
